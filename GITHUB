@@ -17,7 +17,7 @@ cd ~shimclin/www/singapore/wp-content/plugins/is-google-tag-manager/
 
 git add .
 git commit -m "`date`"
-#git push -u origin master
-git push -f -u origin master
+git push -u origin master
+#git push -f -u origin master
 
 
