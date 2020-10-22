@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name:       Google Tag Manager Only
  * Plugin URI:        https://github.com/ivanshim/is-google-tag-manager
@@ -22,24 +21,9 @@
 if ( !class_exists('is_google_tag_manager') ) {
 	class is_google_tag_manager {
 		
-		public static $gtm_id = 'GTM-xxxxxxx'; // just change this variable
 
-		public static function add_to_wp_head() {
-			global $gtm_id;
-?>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','<?=$gtm_id;?>');</script>
-<!-- End Google Tag Manager -->
-<?php
-		}
-
-
-		/* https://wordpress.stackexchange.com/a/274139 */
-		/* Insert tracking code or other stuff directly after BODY opens */
+		// https://wordpress.stackexchange.com/a/274139
+		// Insert tracking code or other stuff directly after BODY opens
 		public static function wps_add_tracking_body($classes) {
 			global $gtm_id;
 
@@ -54,24 +38,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			return $classes;
 		}
 
-		public static function go() {
-			add_action('wp_head', array( __CLASS__, 'add_to_wp_head') );
-			add_filter('body_class', 'wps_add_tracking_body', PHP_INT_MAX); // make sure, that's the last filter in the queue
-			
-		}
+
+	public static function register_input() {
+		register_setting( 'general', 'gtm_id', 'esc_attr' );
+		add_settings_field( 'gtm_id', '<label for="gtm_id">' . __( 'Google Tag Manager ID' , 'is_google_tag_manager' ) . '</label>' , array( __CLASS__, 'html_input') , 'general' );
 	}
-	is_google_tag_manager::go();
+	public static function html_input() {
+		?>
+		<input type="text" id="gtm_id" name="gtm_id" placeholder="GTM-nnnn" class="regular-text code" value="<?php echo get_option( 'gtm_id', '' ); ?>" />
+		<p class="description"><?php _e( 'The ID from Google&rsquo;s provided code (as emphasized):', 'google_tag_manager' ); ?><br />
+			<code>&lt;noscript&gt;&lt;iframe src="//www.googletagmanager.com/ns.html?id=<strong style="color:#c00;">ABC-DEFG</strong>"</code></p>
+		<p class="description"><?php _e( 'You can get yours <a href="https://www.google.com/tagmanager/">here</a>!', 'google_tag_manager' ); ?></p>
+		<?php
+	}
+
+
+	public static function insert_into_header() {
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+		$gtm_id = esc_js ($gtm_id);
+		?>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','<?=$gtm_id; ?>');</script>
+<!-- End Google Tag Manager -->
+		<?php
+	}
+
+	public static function insert_into_body() {
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+		$gtm_id = esc_attr($gtm_id);
+		?>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?=$gtm_id; ?>"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+		<?php
+	}
+
+	public static function go() {
+		add_filter( 'admin_init',	array( __CLASS__, 'register_input' ) );
+		add_action( 'wp_head',		array( __CLASS__, 'insert_into_header') );
+		add_action( 'wp_body_open',	array( __CLASS__, 'insert_into_body') );
+	}
 }
-
-
-
-
-
-
-
-
-
-
+is_google_tag_manager::go();
+}
 
 
 ?>
