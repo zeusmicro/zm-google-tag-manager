@@ -68,26 +68,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		echo self::$gtm_script;
 	}
 
+	public static function fill_my_buffer() {
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+		ob_start();
+	}
+
 	public static $inserted_into_body = false;
 
-	public static function insert_into_body() {
-		if ( self::$inserted_into_body ) { return; } // insert into body once only
-		self::$inserted_into_body = true;
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
-		echo self::$gtm_noscript;
-	}
-
-	public static $buffer_is_empty = true;
-
-	public static function fill_my_buffer() {
-		if ( self::$inserted_into_body ) { return; } // insert into body once only
-		self::$inserted_into_body = true;
-		ob_start();
-		self::$buffer_is_empty = false;
-	}
-
 	public static function empty_my_buffer() {
-		if ( self::$buffer_is_empty ) { return; } // exit if buffers are empty
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+		if ( self::$inserted_into_body ) { return; } // insert into body once only
+		self::$inserted_into_body = true;
 		$get_me_buffers = ob_get_clean();
 		$pattern ='/<[bB][oO][dD][yY]\s[A-Za-z]{2,5}[A-Za-z0-9 "_=\-\.]+>|<body>/';
 		ob_start();
@@ -101,11 +92,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	public static function go() {
 		add_filter( 'init',		array( __CLASS__, 'load_variables' ) );
 		add_filter( 'admin_init',	array( __CLASS__, 'register_input' ) );
-		add_action( 'wp_head',		array( __CLASS__, 'insert_into_header' ), PHP_INT_MAX );
-		add_action( 'wp_body_open',	array( __CLASS__, 'insert_into_body' ) ); // New core hook
+		add_action( 'wp_head',		array( __CLASS__, 'insert_into_header' ), PHP_INT_MAX - 1 );
 
-		add_action( 'wp_head',		array( __CLASS__, 'fill_my_buffer' ) ); // start filling buffer
-		add_action( 'wp_footer',	array( __CLASS__, 'empty_my_buffer' ) ); // process and empty buffer
+		add_action( 'wp_head',		array( __CLASS__, 'fill_my_buffer' ), PHP_INT_MAX ); // start filling buffer
+		add_action( 'wp_body_open',	array( __CLASS__, 'empty_my_buffer' ) ); // process & empty buffer (New core hook)
+		add_action( 'wp_footer',	array( __CLASS__, 'empty_my_buffer' ) ); // process & empty buffer
 	}
 }
 is_google_tag_manager::go();
