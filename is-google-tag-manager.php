@@ -63,21 +63,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <?php
 	}
 
-	public static function insert_into_header() {
+	public static function header_and_buffer() {
 		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
-		echo self::$gtm_script;
-	}
-
-	public static function fill_my_buffer() {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
-		ob_start();
+		echo self::$gtm_script; // insert into the header
+		ob_start(); // start filling the buffer
 	}
 
 	public static $inserted_into_body = false;
 
-	public static function empty_my_buffer() {
+	public static function process_my_buffer() {
 		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
-		if ( self::$inserted_into_body ) { return; } // insert into body once only
+		if ( self::$inserted_into_body ) { return; } // insert into the body only once
 		self::$inserted_into_body = true;
 		$get_me_buffers = ob_get_clean();
 		$pattern ='/<[bB][oO][dD][yY]\s[A-Za-z]{2,5}[A-Za-z0-9 "_=\-\.]+>|<body>/';
@@ -92,11 +88,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	public static function go() {
 		add_filter( 'init',		array( __CLASS__, 'load_variables' ) );
 		add_filter( 'admin_init',	array( __CLASS__, 'register_input' ) );
-		add_action( 'wp_head',		array( __CLASS__, 'insert_into_header' ), PHP_INT_MAX - 1 );
-
-		add_action( 'wp_head',		array( __CLASS__, 'fill_my_buffer' ), PHP_INT_MAX ); // start filling buffer
-		add_action( 'wp_body_open',	array( __CLASS__, 'empty_my_buffer' ) ); // process & empty buffer (New core hook)
-		add_action( 'wp_footer',	array( __CLASS__, 'empty_my_buffer' ) ); // process & empty buffer
+		add_action( 'wp_head',		array( __CLASS__, 'header_and_buffer' ), PHP_INT_MAX ); // insert just before the closing tag
+		// hook as many places as possible to process & empty the buffer
+		add_action( 'wp_body_open',	array( __CLASS__, 'process_my_buffer' ) ); // New core hook
+		add_action( 'genesis_before',	array( __CLASS__, 'process_my_buffer' ) ); // Genesis
+		add_action( 'tha_body_top',	array( __CLASS__, 'process_my_buffer' ) ); // Theme Hook Alliance
+		add_action( 'body_top',		array( __CLASS__, 'process_my_buffer' ) ); // THA Unprefixed
+		add_action( 'wp_footer',	array( __CLASS__, 'process_my_buffer' ) ); // Last resort
 	}
 }
 is_google_tag_manager::go();
