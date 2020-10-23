@@ -1,21 +1,26 @@
 <?php
-/**
- * Plugin Name:		Google Tag Manager Only
- * Plugin URI:		https://github.com/ivanshim/is-google-tag-manager
- * Description:		This is a lightweight Wordpress plugin that places the Google Tag Manager code at the appropriate places in the webpage.
- * Version:		0.0.9
- * Requires at least:	5.2
- * Requires PHP:	7.2
- * Author:		Ivan Shim
- * Author URI:		https://ivanshim.wordpress.com
- * License:		GPL v2 or later
- * License URI:		https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:		is-google-tag-manager
- *
- * 2020 October 22nd - reboot of this plugin to allow allow the user to input the GTM code at the administrator panel.
- * 2019 February 22nd - 1st written, user needs to manually enter the code into the program.
- *
- */
+/*
+Plugin Name:		Google Tag Manager Only
+Plugin URI:		https://github.com/ivanshim/is-google-tag-manager
+Description:		This is a lightweight Wordpress plugin that places the Google Tag Manager code at the appropriate places in the webpage.
+Version:		0.0.9
+Requires at least:	5.2
+Requires PHP:		7.2
+Author:			Ivan Shim
+Author URI:		https://ivanshim.wordpress.com
+License:		GPL v2 or later
+License URI:		https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:		is-google-tag-manager
+
+2020 October 22nd - reboot of this plugin to allow allow the user to input the GTM code at the administrator panel.
+2019 February 22nd - 1st written, user needs to manually enter the code into the program.
+
+References
+
+https://stackoverflow.com/questions/3581510/wordpress-hook-directly-after-body-tag
+https://wordpress.org/plugins/google-tag-manager/
+
+*/
 
 if ( !class_exists('is_google_tag_manager') ) {
 class is_google_tag_manager {
