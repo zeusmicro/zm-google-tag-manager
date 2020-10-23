@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name:		Google Tag Manager Only
+Plugin Name:		Google Tag Manager Lite
 Plugin URI:		https://github.com/ivanshim/is-google-tag-manager
 Description:		This is a lightweight Wordpress plugin that places the Google Tag Manager code at the appropriate places in the webpage.
 Version:		0.0.9
