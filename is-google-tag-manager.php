@@ -49,16 +49,6 @@ https://wordpress.org/plugins/google-tag-manager/
 
 */
 
-if (! function_exists('current_filter_priority') ) {
-function current_filter_priority() {
-	// https://divimode.com/determine-current-action-name-and-priority/#how-to-find-the-priority
-	global $wp_filter, $wp_current_filter;
-	$action = end( $wp_current_filter );
-	$filter = $wp_filter[ $action ];
-	$prio = $filter->current_priority();
-	return $prio;
-} }
-
 if ( !class_exists('is_google_tag_manager') ) {
 class is_google_tag_manager {
 
@@ -130,8 +120,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			echo preg_replace($pattern, $the_new_body_part, $the_loaded_buffer);
 		}
 		ob_flush();
-
-		//remove_action ( current_filter() , array( __CLASS__, 'process_noscript_buffer'), current_filter_priority() );
 		return $parameter_to_pass_through;
 	}
 
