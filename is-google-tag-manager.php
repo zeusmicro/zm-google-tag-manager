@@ -109,10 +109,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	public static $noscript_buffer_processing_ran_once = false;
 
-	public static function process_noscript_buffer() {
-		if ( self::$noscript_buffer_processing_ran_once ) { return; } // run this only once
+	public static function process_noscript_buffer($parameter_to_pass_through) {
+		if ( self::$noscript_buffer_processing_ran_once ) { return $parameter_to_pass_through; } // run this only once
 		self::$noscript_buffer_processing_ran_once = true;
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		$the_loaded_buffer = ob_get_clean();
 		$pattern ='/<[bB][oO][dD][yY].*>/';
 		if (preg_match($pattern, $the_loaded_buffer, $matched_part_of_buffer)) {
@@ -120,6 +120,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			echo preg_replace($pattern, $the_new_body_part, $the_loaded_buffer);
 		}
 		ob_flush();
+/*
+		// https://divimode.com/determine-current-action-name-and-priority/#how-to-find-the-priority
+		global $wp_filter, $wp_current_filter;
+		$action = end( $wp_current_filter );
+		$filter = $wp_filter[ $action ];
+		$prio = $filter->current_priority();
+
+		remove_action ( current_filter() , array( __CLASS__, 'process_noscript_buffer'), $prio );
+		return $parameter_to_pass_through;
+*/
 	}
 
 	public static function go() {
