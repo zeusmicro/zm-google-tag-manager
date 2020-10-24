@@ -12,10 +12,37 @@ License:		GPL v2 or later
 License URI:		https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:		is-google-tag-manager
 
+*** Description
+
+What is Google Tag Manager?
+
+Google tag manager is management system that allows you to integrate multiple website add-ons for analytics, advertisements, sharing, etc. into a single management platform.
+
+For more information, have a look at:
+
+https://tagmanager.google.com
+
+What does this WordPress plugin do?
+
+This plugin allows you to place the Google Tag Manager code into your web pages. Allowing Google Tag Manager to be triggered when your web pages are loaded.
+
+How is this plugin different from the other Google Tag Manager plugins?
+
+Most plugins work by inserting the code via the regular Wordpress hooks. But unfortunately, template authors are not consistent with including these hooks into their themes.
+
+This has resulted in a couple of problems. Firstly, the Google Tag Manager code may not be inserted. Secondly, the placement may not be exactly where Google recommends them to be, which are:
+
+1/ Install the <script> code as high in the <head> of the page as possible.
+2/ Install the <noscript> code immediately after the opening <body> tag.
+
+This plugin address these problems by ensuring that these criteria are met. Firstly, to ensure that both portions of code are inserted into the webpage, and secondly, to ensure that the placement is exactly where Google recommends them to be.
+
+*** History
+
 2020 October 22nd - reboot of this plugin to allow allow the user to input the GTM code at the administrator panel.
 2019 February 22nd - 1st written, user needs to manually enter the code into the program.
 
-References
+*** References
 
 https://stackoverflow.com/questions/3581510/wordpress-hook-directly-after-body-tag
 https://wordpress.org/plugins/google-tag-manager/
