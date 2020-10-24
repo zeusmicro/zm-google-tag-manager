@@ -66,11 +66,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	public static function process_script_buffer() {
 		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
-		$get_me_buffers = ob_get_clean();
+		$the_loaded_buffer = ob_get_clean();
 		$pattern ='/<[hH][eE][aA][dD].*>/';
-		if (preg_match($pattern, $get_me_buffers, $get_me_buffers_return)) {
-			$d_new_body_plus =$get_me_buffers_return[0].self::$gtm_script;
-			echo preg_replace($pattern, $d_new_body_plus, $get_me_buffers);
+		if (preg_match($pattern, $the_loaded_buffer, $matched_part_of_buffer)) {
+			$the_new_body_part = $matched_part_of_buffer[0].self::$gtm_script;
+			echo preg_replace($pattern, $the_new_body_part, $the_loaded_buffer);
 		}
 		ob_flush();
 	}
@@ -86,11 +86,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		if ( self::$noscript_buffer_processing_ran_once ) { return; } // run this only once
 		self::$noscript_buffer_processing_ran_once = true;
 		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
-		$get_me_buffers = ob_get_clean();
+		$the_loaded_buffer = ob_get_clean();
 		$pattern ='/<[bB][oO][dD][yY].*>/';
-		if (preg_match($pattern, $get_me_buffers, $get_me_buffers_return)) {
-			$d_new_body_plus =$get_me_buffers_return[0].self::$gtm_noscript;
-			echo preg_replace($pattern, $d_new_body_plus, $get_me_buffers);
+		if (preg_match($pattern, $the_loaded_buffer, $matched_part_of_buffer)) {
+			$the_new_body_part = $matched_part_of_buffer[0].self::$gtm_noscript;
+			echo preg_replace($pattern, $the_new_body_part, $the_loaded_buffer);
 		}
 		ob_flush();
 	}
