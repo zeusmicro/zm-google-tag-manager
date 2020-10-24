@@ -120,9 +120,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	public static $noscript_buffer_processing_ran_once = false;
 
 	public static function process_noscript_buffer($parameter_to_pass_through) {
-		if ( self::$noscript_buffer_processing_ran_once ) return; // run this only once
+		if ( self::$noscript_buffer_processing_ran_once ) return $parameter_to_pass_through; // run this only once
 		self::$noscript_buffer_processing_ran_once = true;
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		$the_loaded_buffer = ob_get_clean();
 		$pattern ='/<[bB][oO][dD][yY].*>/';
 		if (preg_match($pattern, $the_loaded_buffer, $matched_part_of_buffer)) {
@@ -131,7 +131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		}
 		ob_flush();
 
-		remove_action ( current_filter() , array( __CLASS__, 'process_noscript_buffer'), current_filter_priority() );
+		//remove_action ( current_filter() , array( __CLASS__, 'process_noscript_buffer'), current_filter_priority() );
 		return $parameter_to_pass_through;
 	}
 
@@ -146,7 +146,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		add_action( 'genesis_before',	array( __CLASS__, 'process_noscript_buffer' ) ); // Genesis
 		add_action( 'tha_body_top',	array( __CLASS__, 'process_noscript_buffer' ) ); // Theme Hook Alliance
 		add_action( 'body_top',		array( __CLASS__, 'process_noscript_buffer' ) ); // THA Unprefixed
-		add_action( 'the_title',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // priority must be <= 10
+		add_action( 'the_title',	array( __CLASS__, 'process_noscript_buffer' ) ); // Title hook
+		add_action( 'the_content',	array( __CLASS__, 'process_noscript_buffer' ) ); // Content hook
 		add_action( 'wp_footer',	array( __CLASS__, 'process_noscript_buffer' ) ); // Last resort
 	}
 }
