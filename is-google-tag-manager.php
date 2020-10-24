@@ -94,6 +94,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		add_action( 'genesis_before',	array( __CLASS__, 'process_my_buffer' ) ); // Genesis
 		add_action( 'tha_body_top',	array( __CLASS__, 'process_my_buffer' ) ); // Theme Hook Alliance
 		add_action( 'body_top',		array( __CLASS__, 'process_my_buffer' ) ); // THA Unprefixed
+		add_action( 'the_title',	array( __CLASS__, 'process_my_buffer' ), 1 ); // priority must be <= 10
 		add_action( 'wp_footer',	array( __CLASS__, 'process_my_buffer' ) ); // Last resort
 	}
 }
