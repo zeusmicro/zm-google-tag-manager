@@ -52,7 +52,7 @@ https://wordpress.org/plugins/google-tag-manager/
 if ( !class_exists('is_google_tag_manager') ) {
 class is_google_tag_manager {
 
-	public static function register_input() {
+	public static function register_input($parameter_to_pass_through) {
 		register_setting( 'general', 'is_google_tag_manager', 'esc_attr' );
 		add_settings_field(
 			'is_google_tag_manager',
@@ -60,6 +60,7 @@ class is_google_tag_manager {
 			array( __CLASS__, 'html_input') ,
 			'general'
 		);
+	return $parameter_to_pass_through;
 	}
 	public static function html_input() {
 		?>
@@ -70,8 +71,8 @@ class is_google_tag_manager {
 	public static $gtm_script = '';
 	public static $gtm_noscript = '';
 
-	public static function load_variables() {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+	public static function load_variables($parameter_to_pass_through) {
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		$gtm_id = esc_attr( esc_js( $gtm_id ) );
 		self::$gtm_script = "<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -84,15 +85,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id='.$gtm_id.'"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->';
+		return $parameter_to_pass_through;
 	}
 
-	public static function buffer_for_script() {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+	public static function buffer_for_script($parameter_to_pass_through) {
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		ob_start(); // start filling the buffer
+		return $parameter_to_pass_through;
 	}
 
-	public static function process_script_buffer() {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+	public static function process_script_buffer($parameter_to_pass_through) {
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		$the_loaded_buffer = ob_get_clean();
 		$pattern ='/<[hH][eE][aA][dD].*>/';
 		if (preg_match($pattern, $the_loaded_buffer, $matched_part_of_buffer)) {
@@ -100,11 +103,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			echo preg_replace($pattern, $the_new_body_part, $the_loaded_buffer);
 		}
 		ob_flush();
+		return $parameter_to_pass_through;
 	}
 
-	public static function buffer_for_noscript() {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return;
+	public static function buffer_for_noscript($parameter_to_pass_through) {
+		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		ob_start(); // start filling the buffer
+		return $parameter_to_pass_through;
 	}
 
 	public static $noscript_buffer_processing_ran_once = false;
@@ -123,20 +128,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		return $parameter_to_pass_through;
 	}
 
+	// above return parameters are required for the_title, and the_content
 	public static function go() {
-		add_filter( 'admin_init',	array( __CLASS__, 'register_input' ) );
-		add_filter( 'init',		array( __CLASS__, 'load_variables' ), 1 ); // run as early as possible
+		add_action( 'admin_init',	array( __CLASS__, 'register_input' ) );
+		add_action( 'init',		array( __CLASS__, 'load_variables' ), 1 ); // run as early as possible
 		add_action( 'init',		array( __CLASS__, 'buffer_for_script' ), PHP_INT_MAX ); // run as late as possible
 		add_action( 'wp_head',		array( __CLASS__, 'process_script_buffer' ), 1 ); // run as early as possible
 		add_action( 'wp_head',		array( __CLASS__, 'buffer_for_noscript' ), PHP_INT_MAX ); // run as late as possible
-		// hook as many places as possible to process & empty the buffer
-		add_action( 'wp_body_open',	array( __CLASS__, 'process_noscript_buffer' ) ); // New core hook
-		add_action( 'genesis_before',	array( __CLASS__, 'process_noscript_buffer' ) ); // Genesis
-		add_action( 'tha_body_top',	array( __CLASS__, 'process_noscript_buffer' ) ); // Theme Hook Alliance
-		add_action( 'body_top',		array( __CLASS__, 'process_noscript_buffer' ) ); // THA Unprefixed
-		add_action( 'the_title',	array( __CLASS__, 'process_noscript_buffer' ) ); // Title hook
-		add_action( 'the_content',	array( __CLASS__, 'process_noscript_buffer' ) ); // Content hook
-		add_action( 'wp_footer',	array( __CLASS__, 'process_noscript_buffer' ) ); // Last resort
+		// hook as many places as possible to process & empty the buffer. run as early as possible
+		add_action( 'wp_body_open',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // New core hook
+		add_action( 'genesis_before',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // Genesis
+		add_action( 'tha_body_top',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // Theme Hook Alliance
+		add_action( 'body_top',		array( __CLASS__, 'process_noscript_buffer' ), 1 ); // THA Unprefixed
+		add_action( 'the_title',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // Title hook
+		add_action( 'the_content',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // Content hook
+		add_action( 'wp_footer',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // Last resort
 	}
 }
 is_google_tag_manager::go();
