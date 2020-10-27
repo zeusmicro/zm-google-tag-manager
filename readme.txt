@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: ivanshim
+Contributors: zeusmicro, ivanshim
 Donate link: 
 Tags: comments, spam
 Requires at least: 4.7
