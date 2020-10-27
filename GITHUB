@@ -3,7 +3,7 @@
 echo '### wordpress google tag manager plugin by ivan shim'
 
 
-cd ~shimclin/www/singapore/wp-content/plugins/is-google-tag-manager/
+cd ~shimclin/www/singapore/wp-content/plugins/zm-google-tag-manager/
 
 
 #echo "# is-menus" >> README.md
@@ -11,7 +11,7 @@ cd ~shimclin/www/singapore/wp-content/plugins/is-google-tag-manager/
 #git add README.md
 #git commit -m "first commit"
 #git branch -M master
-#git remote add origin https://github.com/ivanshim/is-google-tag-manager.git
+#git remote add origin https://github.com/zeusmicro/zm-google-tag-manager.git
 #git push -u origin master
 
 

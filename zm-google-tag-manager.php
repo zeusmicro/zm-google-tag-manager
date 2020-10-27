@@ -1,16 +1,16 @@
 <?php
 /*
-Plugin Name:		IS Google Tag Manager
-Plugin URI:		https://github.com/ivanshim/is-google-tag-manager
+Plugin Name:		ZM Google Tag Manager
+Plugin URI:		https://github.com/zeusmicro/zm-google-tag-manager
 Description:		This is a lightweight Wordpress plugin that places the Google Tag Manager code at the appropriate places in the webpage.
 Version:		0.0.91
 Requires at least:	5.2
 Requires PHP:		7.2
-Author:			Ivan Shim
+Author:			Zeus Micro, Ivan Shim
 Author URI:		https://ivanshim.wordpress.com
 License:		GPL v2 or later
 License URI:		https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain:		is-google-tag-manager
+Text Domain:		zm-google-tag-manager
 
 *** Description
 
@@ -49,14 +49,14 @@ https://wordpress.org/plugins/google-tag-manager/
 
 */
 
-if ( !class_exists('is_google_tag_manager') ) {
-class is_google_tag_manager {
+if ( !class_exists('zm_google_tag_manager') ) {
+class zm_google_tag_manager {
 
 	public static function register_input($parameter_to_pass_through) {
-		register_setting( 'general', 'is_google_tag_manager', 'esc_attr' );
+		register_setting( 'general', 'zm_google_tag_manager', 'esc_attr' );
 		add_settings_field(
-			'is_google_tag_manager',
-			'<label for="is_google_tag_manager">' . __( 'Google Tag Manager ID' , 'is_google_tag_manager' ) . '</label>' ,
+			'zm_google_tag_manager',
+			'<label for="zm_google_tag_manager">' . __( 'Google Tag Manager ID' , 'zm_google_tag_manager' ) . '</label>' ,
 			array( __CLASS__, 'html_input') ,
 			'general'
 		);
@@ -64,7 +64,7 @@ class is_google_tag_manager {
 	}
 	public static function html_input() {
 		?>
-<input type="text" id="is_google_tag_manager" name="is_google_tag_manager" placeholder="GTM-nnnnnn" class="regular-text code" value="<?php echo get_option( 'is_google_tag_manager', '' ); ?>" />
+<input type="text" id="zm_google_tag_manager" name="zm_google_tag_manager" placeholder="GTM-nnnnnn" class="regular-text code" value="<?php echo get_option( 'zm_google_tag_manager', '' ); ?>" />
 <?php
 	}
 
@@ -72,7 +72,7 @@ class is_google_tag_manager {
 	public static $gtm_noscript = '';
 
 	public static function load_variables($parameter_to_pass_through) {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
+		if ( ! $gtm_id = get_option( 'zm_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		$gtm_id = esc_attr( esc_js( $gtm_id ) );
 		self::$gtm_script = "<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -89,13 +89,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	}
 
 	public static function buffer_for_script($parameter_to_pass_through) {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
+		if ( ! $gtm_id = get_option( 'zm_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		ob_start(); // start filling the buffer
 		return $parameter_to_pass_through;
 	}
 
 	public static function process_script_buffer($parameter_to_pass_through) {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
+		if ( ! $gtm_id = get_option( 'zm_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		$the_loaded_buffer = ob_get_clean();
 		$pattern ='/<[hH][eE][aA][dD].*>/';
 		if (preg_match($pattern, $the_loaded_buffer, $matched_part_of_buffer)) {
@@ -107,7 +107,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	}
 
 	public static function buffer_for_noscript($parameter_to_pass_through) {
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
+		if ( ! $gtm_id = get_option( 'zm_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		ob_start(); // start filling the buffer
 		return $parameter_to_pass_through;
 	}
@@ -117,7 +117,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	public static function process_noscript_buffer($parameter_to_pass_through) {
 		if ( self::$noscript_buffer_processing_ran_once ) return $parameter_to_pass_through; // run this only once
 		self::$noscript_buffer_processing_ran_once = true;
-		if ( ! $gtm_id = get_option( 'is_google_tag_manager', '' ) ) return $parameter_to_pass_through;
+		if ( ! $gtm_id = get_option( 'zm_google_tag_manager', '' ) ) return $parameter_to_pass_through;
 		$the_loaded_buffer = ob_get_clean();
 		$pattern ='/<[bB][oO][dD][yY].*>/';
 		if (preg_match($pattern, $the_loaded_buffer, $matched_part_of_buffer)) {
@@ -145,7 +145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		add_action( 'wp_footer',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // Last resort
 	}
 }
-is_google_tag_manager::go();
+zm_google_tag_manager::go();
 }
 
 ?>
