@@ -128,7 +128,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		return $parameter_to_pass_through;
 	}
 
-	// above return parameters are required for the_title, and the_content
+	// above return parameter_to_pass_through are required for add_action of the_title, and the_content
 	public static function go() {
 		add_action( 'admin_init',	array( __CLASS__, 'register_input' ) );
 		add_action( 'init',		array( __CLASS__, 'load_variables' ), 1 ); // run as early as possible
