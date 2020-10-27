@@ -15,7 +15,7 @@ This plugin allows you to place the Google Tag Manager code into your web pages.
 
 What is Google Tag Manager?
 
-Google tag manager is management system that allows you to integrate multiple website add-ons for analytics, advertisements, sharing, etc. into a single management platform.
+Google tag manager is a management system that allows you to manage multiple website add-ons for analytics, advertisements, sharing, etc. from a single management platform. All of which can then be triggered to load together by first loading the Google Tag Mangager.
 
 For more information, have a look at:
 
