@@ -7,7 +7,7 @@ Version:		0.0.91
 Requires at least:	5.5.1
 Requires PHP:		7.4.11
 Author:			Zeus Micro, Ivan Shim
-Author URI:		https://ivanshim.wordpress.com
+Author URI:		https://zeusmicro.wordpress.com
 License:		GPL v2 or later
 License URI:		https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:		zm-google-tag-manager
