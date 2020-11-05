@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: zeusmicro, ivanshim
 Donate link: 
-Tags: comments, spam
+Tags: google tag manager, gtm, google, tag manager, analytics, adwords, theme hook alliance
 Requires at least: 5.0
 Tested up to: 5.5
 Stable tag: 0.1.0
