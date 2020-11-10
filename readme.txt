@@ -4,28 +4,43 @@ Donate link:
 Tags: google tag manager, gtm, google, tag manager, analytics, adwords, theme hook alliance
 Requires at least: 5.0
 Tested up to: 5.5
-Stable tag: 0.1.0
+Stable tag: 0.0.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin allows you to place the Google Tag Manager code into your web pages. Allowing Google Tag Manager to be triggered when your web pages are loaded.
 
 == Description ==
 
-What is Google Tag Manager?
+This WordPress plugin makes it easy for you to add the Google Tag Manager code into your webpage.
 
-Google tag manager is a management system that allows you to manage multiple website add-ons for analytics, advertisements, sharing, etc. from a single management platform. All of which can then be triggered to load together by first loading the Google Tag Mangager.
+You can obtain your Google Tag Manager ID from: [https://tagmanager.google.com](https://tagmanager.google.com "Google Tag Manager")
 
-For more information, have a look at:
+After getting your Google Tag Manager ID, login to your WordPress Dashboard > Settings > General > Google Tag Manager ID
 
-https://tagmanager.google.com
+Enter your Google Tag Manger ID, and Save Changes
 
-What does this WordPress plugin do?
+Find out more about the Google Tag Manager, and how it can help you by watching this video:
 
-This plugin allows you to place the Google Tag Manager code into your web pages. Allowing Google Tag Manager to be triggered when your web pages are loaded.
+[youtube http://www.youtube.com/watch?v=KRvbFpeZ11Y]
 
-How is this plugin different from the other Google Tag Manager plugins?
+== Frequently Asked Questions ==
+
+= What is the Google Tag Manager? =
+
+The Google Tag Manager is a system that allows you to load muitiple website add-ons by installing code into your webpage.
+
+When your webpage loads, the installed Google Tag Manager code will then call the Google Tag Manager system, which can then call multiple add-ons for example, for analytics, advertisements, sharing, etc.
+
+The Google tag manager also provides a management system allowing to manage what you would like to load, and how you would like to have them loaded.
+
+For more information, have a look at: [https://tagmanager.google.com](https://tagmanager.google.com "Google Tag Manager")
+
+= What does this WordPress plugin do? =
+
+This WordPress plugin allows you to place the Google Tag Manager code into your web pages. Allowing Google Tag Manager to be triggered when your web pages are loaded.
+
+= How is this plugin different from the other Google Tag Manager plugins? =
 
 Most plugins work by inserting the code via the regular Wordpress hooks. But unfortunately, template authors are not consistent with including these hooks into their themes.
 
@@ -37,11 +52,11 @@ This has resulted in a couple of problems. Firstly, the Google Tag Manager code 
 This plugin address these problems by ensuring that these criteria are met. Firstly, to ensure that both portions of code are inserted into the webpage, and secondly, to ensure that the placement is exactly where Google recommends them to be.
 
 
-== Frequently Asked Questions ==
-
-
 == Screenshots ==
 
 
 == Changelog ==
+
+= 1.0.0 =
+* Initial Public Release
 
