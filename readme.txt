@@ -24,6 +24,14 @@ Find out more about the Google Tag Manager, and how it can help you by watching 
 
 [youtube http://www.youtube.com/watch?v=KRvbFpeZ11Y]
 
+== Installation ==
+
+Upload `zm-google-tag-manager.php` to the `/wp-content/plugins/` directory
+
+Activate the plugin through the 'Plugins' menu in WordPress
+
+Go to `Settings` > `General` and set the ID from your Google Tag Manager account.
+
 == Frequently Asked Questions ==
 
 = What is the Google Tag Manager? =

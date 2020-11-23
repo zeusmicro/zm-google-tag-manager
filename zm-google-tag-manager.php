@@ -137,6 +137,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		add_action( 'init',		array( __CLASS__, 'buffer_for_script' ), PHP_INT_MAX ); // run as late as possible
 		add_action( 'wp_head',		array( __CLASS__, 'process_script_buffer' ), 1 ); // run as early as possible
 		add_action( 'wp_head',		array( __CLASS__, 'buffer_for_noscript' ), PHP_INT_MAX ); // run as late as possible
+		// body_class() used by previous hacks does not work, because wordpress does an esc_attr() to the data
 		// hook as many places as possible to process & empty the buffer. run as early as possible
 		add_action( 'wp_body_open',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // New core hook
 		add_action( 'genesis_before',	array( __CLASS__, 'process_noscript_buffer' ), 1 ); // Genesis
