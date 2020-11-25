@@ -14,7 +14,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 This WordPress plugin makes it easy for you to add the Google Tag Manager code into your webpage.
 
-You can obtain your Google Tag Manager ID from: [https://tagmanager.google.com](https://tagmanager.google.com "Google Tag Manager")
+You can obtain your Google Tag Manager ID from: [ https://tagmanager.google.com ] ( https://tagmanager.google.com "Google Tag Manager" )
 
 After getting your Google Tag Manager ID, login to your WordPress Dashboard > Settings > General > Google Tag Manager ID
 
@@ -22,7 +22,7 @@ Enter your Google Tag Manger ID, and Save Changes
 
 Find out more about the Google Tag Manager, and how it can help you by watching this video:
 
-[youtube http://www.youtube.com/watch?v=KRvbFpeZ11Y]
+[ youtube http://www.youtube.com/watch?v=KRvbFpeZ11Y ]
 
 == Installation ==
 
@@ -42,7 +42,7 @@ When your webpage loads, the installed Google Tag Manager code will then call th
 
 The Google tag manager also provides a management system allowing to manage what you would like to load, and how you would like to have them loaded.
 
-For more information, have a look at: [https://tagmanager.google.com](https://tagmanager.google.com "Google Tag Manager")
+For more information, have a look at: [ https://tagmanager.google.com ] ( https://tagmanager.google.com "Google Tag Manager" )
 
 = What does this WordPress plugin do? =
 
