@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name:		Installer for Google Tag Manager
+Plugin Name:		ZM Installer for Google Tag Manager
 Plugin URI:		https://github.com/zeusmicro/zm-google-tag-manager
-Description:		This is a lightweight Wordpress plugin that places the Google Tag Manager code at the appropriate places in the webpage.
+Description:		This lightweight Wordpress plugin places the Google Tag Manager code at the exactly required places in the webpage.
 Version:		0.0.1
 Requires at least:	5.0
 Requires PHP:		7.0
