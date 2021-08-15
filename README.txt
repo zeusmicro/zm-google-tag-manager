@@ -67,4 +67,5 @@ This plugin address these problems by ensuring that these criteria are met. Firs
 
 = 1.0.0 =
 * Initial Public Release
+* 2021 August 16 - Ivan Shim - renamed 'master' branch to 'main'
 
